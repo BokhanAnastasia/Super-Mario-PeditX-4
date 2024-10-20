@@ -15,7 +15,7 @@ namespace Super_Mario_PeditX_4.Character
         HEAD,
         CHEST
     }
-    public class Enemy: Character
+    public class Enemy: Character, Fighting
     {
         private int HP;
         private int strength;
@@ -31,6 +31,41 @@ namespace Super_Mario_PeditX_4.Character
             this.weekPoint = weekPoint;
         }
 
+        public bool compareAgility(int agility)
+        {
+            if (agility >= this.agility) return false;
+            else return true;
+        }
+
+        public void dash()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void hardPunch()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void punch()
+        {
+            throw new NotImplementedException();
+        }
+        public void startFight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void stopFight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void wait()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void ShowInfo()
         {
             Console.WriteLine(
@@ -39,6 +74,11 @@ namespace Super_Mario_PeditX_4.Character
                 $"HP: {HP}, " +
                 $"Strength: {strength}, " +
                 $"Week Point: {weekPoint}");
+        }
+
+        public void getDamage(int damage)
+        {
+            HP = HP - damage;
         }
     }
 }

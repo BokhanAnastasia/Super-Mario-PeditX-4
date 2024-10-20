@@ -13,7 +13,7 @@ namespace Super_Mario_PeditX_4.Items
         private int addingStrength;
         private int addingAgility;
 
-        private int HP;
+        public int HP;
         
         Armor(  int addingHP, int addingStrength, int addingAgility, int HP,
                 int price, string name): base(price, name) 
@@ -22,6 +22,12 @@ namespace Super_Mario_PeditX_4.Items
             this.addingStrength = addingStrength;
             this.addingAgility = addingAgility; 
             this.HP = HP;
+        }
+
+        public override string ToString()
+        {
+            string info = $"Armor HP = {HP}. Buffs: HP +{addingHP}, strength +{addingStrength}, agility +{addingAgility}";
+            return info;
         }
     }
 }

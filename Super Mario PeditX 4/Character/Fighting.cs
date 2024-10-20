@@ -14,7 +14,7 @@ namespace Super_Mario_PeditX_4.Character
         WAIT
     }
 
-    public enum FightResult
+    public enum FightState
     {
         WIN,
         LOOSE
@@ -22,17 +22,14 @@ namespace Super_Mario_PeditX_4.Character
 
     interface Fighting
     {
-        bool result { get; }
-
         public void punch();
         public void hardPunch();
         public void dash();
         public void wait();
-        public void chooseMethod(FightMethod method);
         public bool compareAgility(int agility);
         public void startFight();
         public void stopFight();
-        public FightResult getResult();
+        public void getDamage(int damage);
 
     }
 }
