@@ -18,7 +18,6 @@ namespace Super_Mario_PeditX_4.Character
             this.level = level;
         }
 
-        // Абстрактный метод, который будут реализовывать наследники
         public abstract void ShowInfo();
     }
 }

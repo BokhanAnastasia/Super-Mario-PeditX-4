@@ -17,7 +17,7 @@ namespace Super_Mario_PeditX_4.UI
 
         const int SW_MAXIMIZE = 3;
 
-        static void LoadMainScreen()
+        public static void LoadMainScreen()
         {
             IntPtr handle = GetConsoleWindow();
             ShowWindow(handle, SW_MAXIMIZE);
