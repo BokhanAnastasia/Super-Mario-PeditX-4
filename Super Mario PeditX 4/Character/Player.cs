@@ -8,16 +8,20 @@ using System.Threading.Tasks;
 
 namespace Super_Mario_PeditX_4.Character
 {
-    public class Player : Character, Fighting
+    public class Player : Character, Fighting, Actions
     {
         private int HP;
         private int strength;
         private int agility;
         public int money;
 
+        private float points = 0f;
+
         public Armor? armor = null;
         public Weapon? weapon = null;
         private readonly ItemsProvider inventory;
+
+
 
 
         private static readonly int LEVEL_PROGRESSION = 5;
@@ -25,6 +29,20 @@ namespace Super_Mario_PeditX_4.Character
         private static readonly int BASE_MONEY = 0;
         private static readonly int BASE_AGILITY = 10;
         private static readonly int BASE_STRENGTH = 10;
+
+        private static readonly int ZERO_DAMAGE = 0;
+        private static readonly int BASE_DAMAGE = 5;
+
+        private static readonly int MAX_PUNCH_RANDOM_VALUE = 10;
+        private static readonly int MAX_HARD_PUNCH_RANDOM_VALUE = 20;
+        private static readonly int MIN_PUNCH_RANDOM_VALUE = 0;
+        private static readonly int MIN_HARD_PUNCH_RANDOM_VALUE = 1;
+        private static readonly int MAX_DASH_LOWING_PARAMETR = 5;
+        private static readonly int MIN_DASH_LOWING_PARAMETR = 1;
+
+        private bool hardPunchState = false;
+        private int dashLowingParam = 0;
+        Random random = new Random();
 
         public Player( string name, CharacterLevel level)
             : base(name, level)
@@ -74,33 +92,6 @@ namespace Super_Mario_PeditX_4.Character
                 $"Money: {money}");
         }
 
-        public void punch()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void hardPunch()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void dash()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void wait()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void chooseMethod(FightMethod method)
-        {
-            if (method == FightMethod.PUNCH)        { punch(); }
-            if (method == FightMethod.HARD_PUNCH)   { hardPunch(); }
-            if (method == FightMethod.DASH)         { dash(); }
-            if (method == FightMethod.WAIT)         { wait(); }
-        }
 
         public bool compareAgility(int agility)
         {
@@ -108,24 +99,55 @@ namespace Super_Mario_PeditX_4.Character
             else return true;
         }
 
-        public void startFight()
+        private void addPoints()
+        {
+            money += 10; // ПЕРЕДЕЛАТЬ
+        }
+
+
+        public FightState getState(int enemyHP)
+        {
+            if (HP <= 0)           { die();        return FightState.LOOSE; }
+            else if (enemyHP <= 0) { addPoints();  return FightState.WIN;   }
+            else                                   return FightState.IN_PROGRESS;
+        }
+
+
+        // __________________ БОЕВКА ____________________
+
+        public int moveDamage()
+        {
+            throw new NotImplementedException();
+        }
+        public int punchDamage()
         {
             throw new NotImplementedException();
         }
 
-        public void stopFight()
+        private int hardPunchDamage()
         {
-            getResult();
+            throw new NotImplementedException();
         }
 
-        public FightState getResult()
+        public int dashDamage()
         {
-            if (HP <= 0) return FightState.LOOSE;
-            else return FightState.WIN;
+            dashLowingParam = level.currentLevel * random.Next(MIN_DASH_LOWING_PARAMETR, MAX_DASH_LOWING_PARAMETR);
+            return ZERO_DAMAGE;
         }
 
-        public void getDamage(int damage)
+        public int waitDamage()
         {
+            hardPunchState = true;
+            return ZERO_DAMAGE;
+        }
+
+        public void setDamage(int damage)
+        {
+            // если значение уворота больше дамага, то приравниваем эти значения
+            //                                      иначе будет прибавка к ХП
+            if (dashLowingParam >= damage) { dashLowingParam = damage; }
+            damage = damage - dashLowingParam;
+
             // если у игрока есть броня
             if (armor != null)
             {
@@ -144,8 +166,27 @@ namespace Super_Mario_PeditX_4.Character
             }
             // если у игрока НЕТ брони
             else { HP -= damage; } // наносим игроку full damage
+        }
 
 
+        //__________________ ТУТ НАДО НАКОДИТЬ UI ___________________________
+        public void move(int x, int y)
+        {
+            // вызов функции UI
+            throw new NotImplementedException();
+        }
+
+
+        public void die()
+        {
+            // вызов функции UI
+            throw new NotImplementedException();
+        }
+
+        public void appearOnTheScreen(int x, int y)
+        {
+            // вызов функции UI
+            throw new NotImplementedException();
         }
     }
 }

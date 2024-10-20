@@ -8,28 +8,31 @@ namespace Super_Mario_PeditX_4.Character
 {
     public enum FightMethod
     {
-        PUNCH,
-        HARD_PUNCH,
+        PUNCH = 0,
         DASH,
-        WAIT
+        WAIT,
+        MOVE
     }
 
     public enum FightState
     {
         WIN,
-        LOOSE
+        LOOSE,
+        IN_PROGRESS
+    }
+    public enum Direction
+    {
+        LEFT, RIGHT, UP
     }
 
     interface Fighting
     {
-        public void punch();
-        public void hardPunch();
-        public void dash();
-        public void wait();
+        public int punchDamage();
+        public int moveDamage();
+        public int dashDamage();
+        public int waitDamage();
         public bool compareAgility(int agility);
-        public void startFight();
-        public void stopFight();
-        public void getDamage(int damage);
+        public void setDamage(int damage);
 
     }
 }
