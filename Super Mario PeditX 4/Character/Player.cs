@@ -40,7 +40,7 @@ namespace Super_Mario_PeditX_4.Character
         private static readonly int MAX_DASH_LOWING_PARAMETR = 5;
         private static readonly int MIN_DASH_LOWING_PARAMETR = 1;
 
-        private bool hardPunchState = false;
+        public bool hardPunchState = false;
         private int dashLowingParam = 0;
         Random random = new Random();
 
@@ -101,6 +101,7 @@ namespace Super_Mario_PeditX_4.Character
 
         private void addPoints()
         {
+            points += 10;
             money += 10; // ПЕРЕДЕЛАТЬ
         }
 
@@ -121,17 +122,28 @@ namespace Super_Mario_PeditX_4.Character
         }
         public int punchDamage()
         {
-            throw new NotImplementedException();
+            // урон = сила * рандом от 0 до 10 + уровень персонажа * рандом от 0 до 10
+            return strength * random.Next(MIN_PUNCH_RANDOM_VALUE, MAX_PUNCH_RANDOM_VALUE) +
+                   level.currentLevel * random.Next(MIN_PUNCH_RANDOM_VALUE, MAX_PUNCH_RANDOM_VALUE);
         }
 
-        private int hardPunchDamage()
+        public int hardPunchDamage()
         {
-            throw new NotImplementedException();
+            if (hardPunchState)
+            {
+                hardPunchState = false;
+                // если до этого нажимали "ПОДГОТОВКА", то 
+                // урон = сила * рандом от 1 до 20 + уровень персонажа * рандом от 1 до 20
+                return strength * random.Next(MIN_HARD_PUNCH_RANDOM_VALUE, MAX_HARD_PUNCH_RANDOM_VALUE) +
+                       level.currentLevel * random.Next(MIN_HARD_PUNCH_RANDOM_VALUE, MAX_HARD_PUNCH_RANDOM_VALUE);
+            }
+            else return ZERO_DAMAGE;
         }
 
         public int dashDamage()
         {
-            dashLowingParam = level.currentLevel * random.Next(MIN_DASH_LOWING_PARAMETR, MAX_DASH_LOWING_PARAMETR);
+            // зависит от ловкости персонажа и случайного значения
+            dashLowingParam = agility * random.Next(MIN_DASH_LOWING_PARAMETR, MAX_DASH_LOWING_PARAMETR);
             return ZERO_DAMAGE;
         }
 
