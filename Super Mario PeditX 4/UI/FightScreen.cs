@@ -20,10 +20,12 @@ namespace Super_Mario_PeditX_4.UI
         // получение дамага от игрока злодею
         private int getDamageFromPlayer(FightMethod method)
         {
-            if      (method == FightMethod.PUNCH) { return player.punchDamage();}
-            else if (method == FightMethod.WAIT)  { return player.waitDamage(); }
-            else if (method == FightMethod.DASH)  { return player.dashDamage(); }
-            else if (method == FightMethod.MOVE)  { return player.moveDamage(); }
+            if      (method == FightMethod.PUNCH && !player.hardPunchState)  { return player.punchDamage();     }
+            else if (method == FightMethod.PUNCH &&  player.hardPunchState)  { return player.hardPunchDamage(); }
+            else if (method == FightMethod.WAIT  && !player.hardPunchState)  { return player.waitDamage();      }
+            else if (method == FightMethod.DASH  && !player.hardPunchState)  { return player.dashDamage();      }
+            else if (method == FightMethod.MOVE  && !player.hardPunchState)  { return player.moveDamage();      }
+            
             else return 0;
 
         }
@@ -32,10 +34,12 @@ namespace Super_Mario_PeditX_4.UI
         {   
             Random random = new Random();
             int method = random.Next(0, 4);
-            if      (method == 0) { return enemy.punchDamage();}
-            else if (method == 1) { return enemy.waitDamage(); }
-            else if (method == 2) { return enemy.dashDamage(); }
-            else if (method == 3) { return enemy.moveDamage(); }
+            if      (method == 0 && !enemy.hardPunchState) { return enemy.punchDamage();    }
+            else if (method == 0 &&  enemy.hardPunchState) { return enemy.hardPunchDamage();}
+            else if (method == 1 && !enemy.hardPunchState) { return enemy.waitDamage();     }
+            else if (method == 2 && !enemy.hardPunchState) { return enemy.dashDamage();     }
+            else if (method == 3 && !enemy.hardPunchState) { return enemy.moveDamage();     }
+            
             else return 0;
 
         }
@@ -51,7 +55,7 @@ namespace Super_Mario_PeditX_4.UI
             enemy.setDamage(getDamageFromPlayer(method));
         }
 
-        private void Fight()
+        public void Fight()
         {
             FightState state = FightState.IN_PROGRESS;
             while(state == FightState.IN_PROGRESS)
@@ -60,7 +64,6 @@ namespace Super_Mario_PeditX_4.UI
                 // ждем, пока пользователь выберет МЕТОД
                 
                 FightMethod method = 0; // п р и м е р
-
                 // бьем врага
                 setDamageToEnemy(method);
                 // бьем игрока
