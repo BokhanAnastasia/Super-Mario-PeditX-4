@@ -23,7 +23,7 @@ namespace Super_Mario_PeditX_4.Character
         WeekPoint weekPoint;
         Random random = new Random();
 
-        private bool hardPunchState = false;
+        public bool hardPunchState = false;
         private int dashLowingParam = 0;
 
         private static readonly int ZERO_DAMAGE = 0;
@@ -72,7 +72,8 @@ namespace Super_Mario_PeditX_4.Character
         }
         public int dashDamage()
         {
-            dashLowingParam = level.currentLevel * random.Next(MIN_DASH_LOWING_PARAMETR, MAX_DASH_LOWING_PARAMETR);
+            // зависит от ловкости персонажа и случайного значения
+            dashLowingParam = agility * random.Next(MIN_DASH_LOWING_PARAMETR, MAX_DASH_LOWING_PARAMETR);
             return ZERO_DAMAGE;
         }
         public int waitDamage()
@@ -80,7 +81,7 @@ namespace Super_Mario_PeditX_4.Character
             hardPunchState = true;
             return ZERO_DAMAGE;
         }
-        private int hardPunchDamage()
+        public int hardPunchDamage()
         {
             if (hardPunchState)
             {
