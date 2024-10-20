@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Super_Mario_PeditX_4.Character
 {
-    public class Player : Character
+    public class Player : Character, Fighting
     {
         private int HP;
         private int strength;
@@ -68,10 +68,84 @@ namespace Super_Mario_PeditX_4.Character
                 $"Level: {level.GetLevel()}, " +
                 $"HP: {HP}, " +
                 $"Strength: {strength}, " +
-                $"Armor: {armor}, " +
-                $"Weapon: {weapon}, " +
+                $"Armor: {armor?.ToString()}, " +
+                $"Weapon: {weapon?.ToString()}, " +
                 $"Agility: {agility}, " +
                 $"Money: {money}");
+        }
+
+        public void punch()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void hardPunch()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void dash()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void wait()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void chooseMethod(FightMethod method)
+        {
+            if (method == FightMethod.PUNCH)        { punch(); }
+            if (method == FightMethod.HARD_PUNCH)   { hardPunch(); }
+            if (method == FightMethod.DASH)         { dash(); }
+            if (method == FightMethod.WAIT)         { wait(); }
+        }
+
+        public bool compareAgility(int agility)
+        {
+            if (agility >= this.agility) return false;
+            else return true;
+        }
+
+        public void startFight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void stopFight()
+        {
+            getResult();
+        }
+
+        public FightState getResult()
+        {
+            if (HP <= 0) return FightState.LOOSE;
+            else return FightState.WIN;
+        }
+
+        public void getDamage(int damage)
+        {
+            // если у игрока есть броня
+            if (armor != null)
+            {
+                // если броня мощнее урона
+                if (armor.HP >= damage) 
+                { 
+                    armor.HP -= damage;  // наносим урон броне
+                }
+                // если броня НЕ мощнее урона
+                else
+                {
+                    damage = damage - armor.HP;
+                    armor = null; // ломаем броню
+                    HP -= damage; // остаток урона наносим игроку
+                }
+            }
+            // если у игрока НЕТ брони
+            else { HP -= damage; } // наносим игроку full damage
+
+
         }
     }
 }

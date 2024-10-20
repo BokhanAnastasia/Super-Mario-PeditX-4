@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Super_Mario_PeditX_4.Level;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,6 @@ namespace Super_Mario_PeditX_4.Items
             this.price = price;
             this.name = name;
         }
+
     }
 }
