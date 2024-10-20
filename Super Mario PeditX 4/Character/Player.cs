@@ -27,7 +27,7 @@ namespace Super_Mario_PeditX_4.Character
         private static readonly int BASE_MONEY = 0;
         private static readonly int BASE_AGILITY = 10;
         private static readonly int BASE_STRENGTH = 10;
-        // testing Branch
+        // testing Branchghghjgjhgjhgjhgjhj
         public Player( string name, CharacterLevel level)
             : base(name, level)
         {
