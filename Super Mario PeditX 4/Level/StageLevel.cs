@@ -25,7 +25,7 @@ namespace Super_Mario_PeditX_4.Level
         }
         public void GenerateLevel()
         {
-
+            // тут
         }
 
         public override void ShowInfo()
