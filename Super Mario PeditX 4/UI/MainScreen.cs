@@ -31,6 +31,7 @@ namespace Super_Mario_PeditX_4.UI
 
             // Чтение ASCII-изображения из файла intro.txt и вывод на консоль
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UI", "Team-presentation.txt");
+            DrawFrame();
             DisplayIntro(filePath);
 
             Thread.Sleep(2500);// Пауза после показа команды
@@ -88,7 +89,7 @@ namespace Super_Mario_PeditX_4.UI
 
             // Постепенное отображение символов
             Console.Clear();
-
+            DrawFrame();
             // Рассчитываем отступы для центрирования текста
             int windowWidth = Console.WindowWidth;
             int windowHeight = Console.WindowHeight;
@@ -106,9 +107,41 @@ namespace Super_Mario_PeditX_4.UI
             // Включаем мигающий курсор после завершения анимации
             Console.CursorVisible = true;
 
-            Console.SetCursorPosition(0, startY + text.Length + 2);
-            Console.WriteLine("Press any key to exit...");
-            Console.ReadKey();
+
+
+
+            // Рассчитываем позицию для сообщения "To play press enter"
+            int lastLineLength = text[text.Length - 1].Length;
+
+            // Рассчитываем позицию X для центрирования текста "To play press enter"
+            int playTextX = (Console.WindowWidth - "To play press enter".Length) / 2;
+
+            // Рассчитываем позицию Y для строки, которая будет сразу под последней строкой ASCII
+            int playTextY = startY + text.Length + 2; // "+ 2" чтобы добавить отступ
+
+            // Устанавливаем курсор в нужное место
+            Console.SetCursorPosition(playTextX, playTextY);
+
+            // Выводим текст для начала игры
+            Console.WriteLine("To play press enter");
+
+
+
+            // Получаем ширину и высоту окна консоли в символах
+            //int width = Console.WindowWidth;
+            //int height = Console.WindowHeight;
+
+            //Console.WriteLine($"Ширина окна: {width} символов");
+            //Console.WriteLine($"Высота окна: {height} символов");
+            //Console.WriteLine($"Общее количество символов в окне: {width * height}");
+
+            // Ждем нажатия клавиши Enter
+            while (Console.ReadKey(true).Key != ConsoleKey.Enter) { }
+
+            Console.Clear();
+
+
+
         }
 
         static void DisplayIntro(string filePath)
@@ -135,6 +168,32 @@ namespace Super_Mario_PeditX_4.UI
             {
                 Console.WriteLine($"Error reading intro file: {ex.Message}");
             }
+        }
+
+
+        public static void DrawFrame()
+        {
+            int width = 150;  // Ширина рамки
+            int height = 40;  // Высота рамки
+
+            // Рассчитываем отступы, чтобы рамка была по центру консольного окна
+            int startX = (Console.WindowWidth - width) / 2;
+            int startY = (Console.WindowHeight - height) / 2;
+
+            // Отрисовка верхней границы
+            Console.SetCursorPosition(startX, startY);
+            Console.Write("+" + new string('-', width - 2) + "+");
+
+            // Отрисовка боковых границ
+            for (int i = 1; i < height - 1; i++)
+            {
+                Console.SetCursorPosition(startX, startY + i);
+                Console.Write("|" + new string(' ', width - 2) + "|");
+            }
+
+            // Отрисовка нижней границы
+            Console.SetCursorPosition(startX, startY + height - 1);
+            Console.Write("+" + new string('-', width - 2) + "+");
         }
     }
 }
